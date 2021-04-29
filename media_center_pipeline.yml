@@ -89,15 +89,15 @@ services:
       - 7878:7878
     restart: unless-stopped
 
-    samba:
-      image: dperson/samba
-      container_name: samba
-      volumes:
-        - /srv:/srv
-      ports:
-        - 139:139
-        - 445:445
-      command: '-s "${SAMBA_SHARENAME};</PATH/TO/DIR>;no;no;no;${SAMBA_USERNAME}" -u "${SAMBA_USERNAME};${SAMBA_PASSWORD}"'
+  samba:
+    image: dperson/samba
+    container_name: samba
+    volumes:
+      - /srv:/srv
+    ports:
+      - 139:139
+      - 445:445
+    command: '-s "${SAMBA_SHARENAME};</PATH/TO/DIR>;no;no;no;${SAMBA_USERNAME}" -u "${SAMBA_USERNAME};${SAMBA_PASSWORD}"'
 
   sonarr:
     image: ghcr.io/linuxserver/sonarr
