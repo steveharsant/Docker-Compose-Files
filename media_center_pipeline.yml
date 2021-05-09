@@ -23,8 +23,9 @@ services:
       - TZ=Europe/London
     volumes:
       - /srv/docker/emby:/config
-      - /srv/media/tv:/data/tvshows
+      - /srv/media/tv:/data/tv
       - /srv/media/movies:/data/movies
+      - /srv/media/yoga:/data/yoga
     ports:
       - 8096:8096
     devices:
@@ -93,11 +94,11 @@ services:
     image: dperson/samba
     container_name: samba
     volumes:
-      - /srv:/srv
+      - ${SAMBA_PATH}:${SAMBA_PATH}
     ports:
       - 139:139
       - 445:445
-    command: '-s "${SAMBA_SHARENAME};</PATH/TO/DIR>;no;no;no;${SAMBA_USERNAME}" -u "${SAMBA_USERNAME};${SAMBA_PASSWORD}"'
+    command: '-s "${SAMBA_SHARENAME};${SAMBA_PATH};no;no;no;${SAMBA_USERNAME}" -u "${SAMBA_USERNAME};${SAMBA_PASSWORD}"'
 
   sonarr:
     image: ghcr.io/linuxserver/sonarr
