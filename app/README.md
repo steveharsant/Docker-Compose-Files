@@ -6,11 +6,13 @@ This Docker compose file is intended for an application/media server. Applicatio
 * Deluge
 * Emby
 * Jakett
+* Ombi
 * Nginx Proxy Manager
 * Radarr
 * Sonarr
 * Syncthing
 * Watchtower
+* Windscribe Proxy
 
 ## Paths
 
