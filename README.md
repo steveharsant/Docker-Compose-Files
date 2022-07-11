@@ -1,11 +1,3 @@
-# Docker Compose Files
+# Local Infrastructure
 
-## media_center_pipeline
-
-### Required environment variables
-
-* `PROXYMANAGER_PASSWORD` Password for Nginx Proxy Manager database connection
-* `SAMBA_SHARENAME` Samba sharename
-* `SAMBA_USERNAME` Samba username
-* `SAMBA_PASSWORD` Samba password
-* `SAMBA_PATH` The path on the host to share
+See each directories README for information on how to run.
