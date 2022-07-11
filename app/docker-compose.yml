@@ -1,0 +1,189 @@
+version: '3'
+services:
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:latest
+    container_name: bazarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+    volumes:
+      - /srv/docker/bazarr:/config
+      - /data/media/movies:/movies
+      - /data/media/tv:/tv
+    ports:
+      - 6767:6767
+    restart: unless-stopped
+
+  deluge:
+    image: lscr.io/linuxserver/deluge:latest
+    container_name: deluge
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+      - DELUGE_LOGLEVEL=error
+    volumes:
+      - /srv/docker/deluge:/config
+      - /data/downloads:/downloads
+    ports:
+      - 8112:8112
+      - 6881:6881
+      - 6881:6881/udp
+    restart: unless-stopped
+
+  emby:
+    image: lscr.io/linuxserver/emby:latest
+    container_name: emby
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+    volumes:
+      - /srv/docker/emby:/config
+      - /data/media:/media
+    ports:
+      - 8096:8096
+    devices:
+      - /dev/dri:/dev/dri
+    restart: unless-stopped
+
+  jackett:
+    image: lscr.io/linuxserver/jackett:latest
+    container_name: jackett
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+      - AUTO_UPDATE=true
+    volumes:
+      - /srv/docker/jackett/config:/config
+      - /srv/docker/jackett/downloads:/downloads
+    ports:
+      - 9117:9117
+    restart: unless-stopped
+
+  ombi:
+    image: lscr.io/linuxserver/ombi:latest
+    container_name: ombi
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+    volumes:
+      - /srv/docker/ombi:/config
+    ports:
+      - 3579:3579
+    restart: unless-stopped
+
+  proxy-manager:
+    image: 'jc21/nginx-proxy-manager:latest'
+    container_name: proxy-manager
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    environment:
+      DB_MYSQL_HOST: "db"
+      DB_MYSQL_PORT: 3306
+      DB_MYSQL_USER: "npm"
+      DB_MYSQL_PASSWORD: "${PROXYMANAGER_PASSWORD}"
+      DB_MYSQL_NAME: "npm"
+    volumes:
+      - /srv/docker/nginx_proxy_manager/data:/data
+      - /srv/docker/nginx_proxy_manager/letsencrypt:/etc/letsencrypt
+
+  proxy-manager-db:
+    image: 'jc21/mariadb-aria:latest'
+    container_name: proxy-manager-db
+    environment:
+      MYSQL_ROOT_PASSWORD: "${PROXYMANAGER_PASSWORD}"
+      MYSQL_DATABASE: 'npm'
+      MYSQL_USER: 'npm'
+      MYSQL_PASSWORD: "${PROXYMANAGER_PASSWORD}"
+    volumes:
+      - /srv/docker/nginx_proxy_manager/mysql:/var/lib/mysql
+
+  radarr:
+    image: ghcr.io/linuxserver/radarr
+    container_name: radarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+    volumes:
+      - /srv/docker/radarr:/config
+      - /data/media/movies:/movies
+      - /data/downloads:/downloads
+    ports:
+      - 7878:7878
+    restart: unless-stopped
+
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+    volumes:
+      - /srv/docker/sonarr:/config
+      - /data/media/tv:/tv
+      - /data/downloads:/downloads
+    ports:
+      - 8989:8989
+    restart: unless-stopped
+
+  syncthing:
+    image: lscr.io/linuxserver/syncthing:latest
+    container_name: syncthing
+    hostname: steve-app-syncthing
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+    volumes:
+      - /srv/docker/syncthing:/config
+      - /data:/data
+    ports:
+      - 8384:8384
+      - 22000:22000/tcp
+      - 22000:22000/udp
+      - 21027:21027/udp
+    restart: unless-stopped
+
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+    environment:
+      - WATCHTOWER_CLEANUP=true
+      - WATCHTOWER_INCLUDE_RESTARTING=true
+      - WATCHTOWER_INCLUDE_STOPPED=true
+      - WATCHTOWER_REVIVE_STOPPED=true
+      - WATCHTOWER_SCHEDULE=0 0 19 * * SUN
+      - WATCHTOWER_TIMEOUT=1800s
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  windscribe:
+    image: adyanth/docker-windscribe-proxy
+    container_name: docker-windscribe
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+      - WINDSCRIBE_USERNAME="${WINDSCRIBE_USERNAME}"
+      - WINDSCRIBE_PASSWORD="${WINDSCRIBE_PASSWORD}"
+      - WINDSCRIBE_PROTOCOL=stealth
+      - WINDSCRIBE_PORT=80
+      - WINDSCRIBE_LOCATION=UK
+      - WINDSCRIBE_LANBYPASS=on
+      - WINDSCRIBE_FIREWALL=off
+      - VPN_PORT=9999
+    volumes:
+      - /srv/docker/windscribe:/config
+    dns:
+      - 8.8.8.8
+    cap_add:
+      - NET_ADMIN
+    restart: unless-stopped
