@@ -165,9 +165,9 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
-  windscribe:
+  windscribe-proxy:
     image: adyanth/docker-windscribe-proxy
-    container_name: docker-windscribe
+    container_name: windscribe-proxy
     environment:
       - PUID=1000
       - PGID=1000
