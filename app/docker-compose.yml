@@ -156,6 +156,12 @@ services:
   tailscale:
     image: tailscale/tailscale:stable
     container_name: tailscale
+    volumes:
+      - /var/lib:/var/lib
+      - /dev/net/tun:/dev/net/tun
+    network_mode: 'host'
+    privileged: true
+    restart: unless-stopped
 
   watchtower:
     image: containrrr/watchtower
