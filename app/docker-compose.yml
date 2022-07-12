@@ -153,6 +153,10 @@ services:
       - 21027:21027/udp
     restart: unless-stopped
 
+  tailscale:
+    image: tailscale/tailscale:stable
+    container_name: tailscale
+
   watchtower:
     image: containrrr/watchtower
     container_name: watchtower
