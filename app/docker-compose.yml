@@ -26,7 +26,7 @@ services:
       - WINDSCRIBE_LANBYPASS=on
     cap_add:
       - NET_ADMIN
-    network_mode: "host"
+    # network_mode: "host"
     ports:
       - 8112:8112 # Deluge (WebUI)
       - 6881:6881 # Deluge
