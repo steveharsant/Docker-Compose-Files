@@ -25,6 +25,10 @@ services:
       - WINDSCRIBE_LANBYPASS=on
     cap_add:
       - NET_ADMIN
+    networks:
+      - default
+    ports:
+      - 8112:8112
     expose:
       - 3128
     dns:
@@ -41,15 +45,14 @@ services:
     volumes:
       - /srv/docker/deluge:/config
       - /data/downloads:/downloads
-    ports:
-      - 8112:8112
+    # ports:
+    #   - 8112:8112
     #   - 6881:6881
     #   - 6881:6881/udp
     restart: unless-stopped
     depends_on:
       - proxy
-    networks:
-      - default
+    network_mode: "service:proxy"
 
   emby:
     image: lscr.io/linuxserver/emby:latest
