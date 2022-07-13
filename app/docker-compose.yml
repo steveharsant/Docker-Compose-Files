@@ -51,8 +51,8 @@ services:
     #   - 6881:6881/udp
     restart: unless-stopped
     depends_on:
-      - proxy
-    network_mode: "service:proxy"
+      - windscribe-proxy
+    network_mode: "service:windscribe-proxy"
 
   emby:
     image: lscr.io/linuxserver/emby:latest
