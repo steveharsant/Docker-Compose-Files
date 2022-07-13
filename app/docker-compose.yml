@@ -26,7 +26,10 @@ services:
     volumes:
       - /srv/docker/deluge:/config
       - /data/downloads:/downloads
-    network_mode: 'host'
+    ports:
+      - 8112:8112
+    #   - 6881:6881
+    #   - 6881:6881/udp
     restart: unless-stopped
 
   emby:
