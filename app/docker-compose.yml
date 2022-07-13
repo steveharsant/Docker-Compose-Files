@@ -53,10 +53,11 @@ services:
   #     - windscribe-proxy
   #   network_mode: "service:windscribe-proxy"
 
-  deluge-ws:
+  deluge:
     image: kabe0/deluge-windscribe:latest
-    container_name: deluge-ws
+    container_name: deluge
     restart: unless-stopped
+    env_file: deluge.env
     volumes:
       - /srv/docker/deluge:/config
       - /data/downloads:/downloads
