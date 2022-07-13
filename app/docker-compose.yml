@@ -27,8 +27,8 @@ services:
       - NET_ADMIN
     networks:
       - default
-    ports:
-      - 8112:8112
+    # ports:
+    #   - 8112:8112
     expose:
       - 3128
     dns:
