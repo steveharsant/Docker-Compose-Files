@@ -15,43 +15,60 @@ services:
       - 6767:6767
     restart: unless-stopped
 
-  windscribe-proxy:
-    image: adyanth/docker-windscribe-proxy:tinyproxy
-    container_name: windscribe-proxy
-    restart: unless-stopped
-    env_file: windscribe.env
-    environment:
-      - WINDSCRIBE_LOCATION=NL
-      - WINDSCRIBE_FIREWALL=on
-      - WINDSCRIBE_LANBYPASS=on
-    cap_add:
-      - NET_ADMIN
-    # network_mode: "host"
-    ports:
-      - 8112:8112 # Deluge (WebUI)
-      - 6881:6881 # Deluge
-      - 6881:6881/udp # Deluge
-    expose:
-      - 3128
-    dns:
-      - 1.1.1.1
+  # windscribe-proxy:
+  #   image: adyanth/docker-windscribe-proxy:tinyproxy
+  #   container_name: windscribe-proxy
+  #   restart: unless-stopped
+  #   env_file: windscribe.env
+  #   environment:
+  #     - WINDSCRIBE_LOCATION=NL
+  #     - WINDSCRIBE_FIREWALL=on
+  #     - WINDSCRIBE_LANBYPASS=on
+  #   cap_add:
+  #     - NET_ADMIN
+  #   # network_mode: "host"
+  #   ports:
+  #     - 8112:8112 # Deluge (WebUI)
+  #     - 6881:6881 # Deluge
+  #     - 6881:6881/udp # Deluge
+  #   expose:
+  #     - 3128
+  #   dns:
+  #     - 1.1.1.1
 
-  deluge:
-    # Ports are exposed by windscribe-proxy.
-    image: lscr.io/linuxserver/deluge:latest
-    container_name: deluge
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/London
-      - DELUGE_LOGLEVEL=error
+  # deluge:
+  #   # Ports are exposed by windscribe-proxy.
+  #   image: lscr.io/linuxserver/deluge:latest
+  #   container_name: deluge
+  #   environment:
+  #     - PUID=1000
+  #     - PGID=1000
+  #     - TZ=Europe/London
+  #     - DELUGE_LOGLEVEL=error
+  #   volumes:
+  #     - /srv/docker/deluge:/config
+  #     - /data/downloads:/downloads
+  #   restart: unless-stopped
+  #   depends_on:
+  #     - windscribe-proxy
+  #   network_mode: "service:windscribe-proxy"
+
+  deluge-ws:
+    image: kabe0/deluge-windscribe:latest
+    container_name: deluge-ws
+    restart: unless-stopped
     volumes:
       - /srv/docker/deluge:/config
       - /data/downloads:/downloads
-    restart: unless-stopped
-    depends_on:
-      - windscribe-proxy
-    network_mode: "service:windscribe-proxy"
+    ports:
+      - 8112:8112 # Deluge (WebUI)
+      - 58846:58846
+    dns:
+      - 8.8.8.8
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
 
   emby:
     image: lscr.io/linuxserver/emby:latest
