@@ -85,18 +85,18 @@ services:
       - 3579:3579
     restart: unless-stopped
 
-  prowlarr:
-    image: lscr.io/linuxserver/prowlarr:develop
-    container_name: prowlarr
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/London
-    volumes:
-      - /srv/docker/prowlarr:/config
-    ports:
-      - 9696:9696
-    restart: unless-stopped
+  # prowlarr:
+  #   image: lscr.io/linuxserver/prowlarr:develop
+  #   container_name: prowlarr
+  #   environment:
+  #     - PUID=1000
+  #     - PGID=1000
+  #     - TZ=Europe/London
+  #   volumes:
+  #     - /srv/docker/prowlarr:/config
+  #   ports:
+  #     - 9696:9696
+  #   restart: unless-stopped
 
   proxy-manager:
     image: 'jc21/nginx-proxy-manager:latest'
