@@ -15,8 +15,9 @@ services:
       - 6767:6767
     restart: unless-stopped
 
-  proxy:
+  windscribe-proxy:
     image: adyanth/docker-windscribe-proxy:tinyproxy
+    container_name: windscribe-proxy
     restart: unless-stopped
     env_file: windscribe.env
     environment:
@@ -25,10 +26,9 @@ services:
       - WINDSCRIBE_LANBYPASS=on
     cap_add:
       - NET_ADMIN
-    networks:
-      - default
-    # ports:
-    #   - 8112:8112
+    network_mode: "host"
+    ports:
+      - 8112:8112 # WebUI port for Deluge.
     expose:
       - 3128
     dns:
@@ -46,7 +46,7 @@ services:
       - /srv/docker/deluge:/config
       - /data/downloads:/downloads
     # ports:
-    #   - 8112:8112
+    #   - 8112:8112 # Ports moved to windscribe-proxy container when network_mode is set to a containers network.
     #   - 6881:6881
     #   - 6881:6881/udp
     restart: unless-stopped
