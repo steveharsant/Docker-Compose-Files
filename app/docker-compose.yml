@@ -15,6 +15,21 @@ services:
       - 6767:6767
     restart: unless-stopped
 
+  proxy:
+    image: adyanth/docker-windscribe-proxy:tinyproxy
+    restart: unless-stopped
+    env_file: windscribe.env
+    environment:
+      - WINDSCRIBE_LOCATION=NL
+      - WINDSCRIBE_FIREWALL=on
+      - WINDSCRIBE_LANBYPASS=on
+    cap_add:
+      - NET_ADMIN
+    expose:
+      - 3128
+    dns:
+      - 1.1.1.1
+
   deluge:
     image: lscr.io/linuxserver/deluge:latest
     container_name: deluge
@@ -31,6 +46,10 @@ services:
     #   - 6881:6881
     #   - 6881:6881/udp
     restart: unless-stopped
+    depends_on:
+      - proxy
+    networks:
+      - default
 
   emby:
     image: lscr.io/linuxserver/emby:latest
@@ -200,26 +219,25 @@ services:
       - WATCHTOWER_TIMEOUT=1800s
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-
-  windscribe-proxy:
-    image: adyanth/docker-windscribe-proxy
-    container_name: windscribe-proxy
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/London
-      - WINDSCRIBE_USERNAME="${WINDSCRIBE_USERNAME}"
-      - WINDSCRIBE_PASSWORD="${WINDSCRIBE_PASSWORD}"
-      - WINDSCRIBE_PROTOCOL=stealth
-      - WINDSCRIBE_PORT=80
-      - WINDSCRIBE_LOCATION=UK
-      - WINDSCRIBE_LANBYPASS=on
-      - WINDSCRIBE_FIREWALL=off
-      - VPN_PORT=9999
-    volumes:
-      - /srv/docker/windscribe:/config
-    dns:
-      - 8.8.8.8
-    cap_add:
-      - NET_ADMIN
-    restart: unless-stopped
+  # windscribe-proxy:
+  #   image: adyanth/docker-windscribe-proxy
+  #   container_name: windscribe-proxy
+  #   environment:
+  #     - PUID=1000
+  #     - PGID=1000
+  #     - TZ=Europe/London
+  #     - WINDSCRIBE_USERNAME="${WINDSCRIBE_USERNAME}"
+  #     - WINDSCRIBE_PASSWORD="${WINDSCRIBE_PASSWORD}"
+  #     - WINDSCRIBE_PROTOCOL=stealth
+  #     - WINDSCRIBE_PORT=80
+  #     - WINDSCRIBE_LOCATION=UK
+  #     - WINDSCRIBE_LANBYPASS=on
+  #     - WINDSCRIBE_FIREWALL=off
+  #     - VPN_PORT=9999
+  #   volumes:
+  #     - /srv/docker/windscribe:/config
+  #   dns:
+  #     - 8.8.8.8
+  #   cap_add:
+  #     - NET_ADMIN
+  #   restart: unless-stopped
