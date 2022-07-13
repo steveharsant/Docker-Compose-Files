@@ -28,13 +28,16 @@ services:
       - NET_ADMIN
     network_mode: "host"
     ports:
-      - 8112:8112 # WebUI port for Deluge.
+      - 8112:8112 # Deluge (WebUI)
+      - 6881:6881 # Deluge
+      - 6881:6881/udp # Deluge
     expose:
       - 3128
     dns:
       - 1.1.1.1
 
   deluge:
+    # Ports are exposed by windscribe-proxy.
     image: lscr.io/linuxserver/deluge:latest
     container_name: deluge
     environment:
@@ -45,10 +48,6 @@ services:
     volumes:
       - /srv/docker/deluge:/config
       - /data/downloads:/downloads
-    # ports:
-    #   - 8112:8112 # Ports moved to windscribe-proxy container when network_mode is set to a containers network.
-    #   - 6881:6881
-    #   - 6881:6881/udp
     restart: unless-stopped
     depends_on:
       - windscribe-proxy
@@ -106,19 +105,6 @@ services:
     ports:
       - 3579:3579
     restart: unless-stopped
-
-  # prowlarr:
-  #   image: lscr.io/linuxserver/prowlarr:develop
-  #   container_name: prowlarr
-  #   environment:
-  #     - PUID=1000
-  #     - PGID=1000
-  #     - TZ=Europe/London
-  #   volumes:
-  #     - /srv/docker/prowlarr:/config
-  #   ports:
-  #     - 9696:9696
-  #   restart: unless-stopped
 
   proxy-manager:
     image: 'jc21/nginx-proxy-manager:latest'
@@ -222,25 +208,3 @@ services:
       - WATCHTOWER_TIMEOUT=1800s
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-  # windscribe-proxy:
-  #   image: adyanth/docker-windscribe-proxy
-  #   container_name: windscribe-proxy
-  #   environment:
-  #     - PUID=1000
-  #     - PGID=1000
-  #     - TZ=Europe/London
-  #     - WINDSCRIBE_USERNAME="${WINDSCRIBE_USERNAME}"
-  #     - WINDSCRIBE_PASSWORD="${WINDSCRIBE_PASSWORD}"
-  #     - WINDSCRIBE_PROTOCOL=stealth
-  #     - WINDSCRIBE_PORT=80
-  #     - WINDSCRIBE_LOCATION=UK
-  #     - WINDSCRIBE_LANBYPASS=on
-  #     - WINDSCRIBE_FIREWALL=off
-  #     - VPN_PORT=9999
-  #   volumes:
-  #     - /srv/docker/windscribe:/config
-  #   dns:
-  #     - 8.8.8.8
-  #   cap_add:
-  #     - NET_ADMIN
-  #   restart: unless-stopped
