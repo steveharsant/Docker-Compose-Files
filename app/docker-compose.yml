@@ -15,44 +15,6 @@ services:
       - 6767:6767
     restart: unless-stopped
 
-  # windscribe-proxy:
-  #   image: adyanth/docker-windscribe-proxy:tinyproxy
-  #   container_name: windscribe-proxy
-  #   restart: unless-stopped
-  #   env_file: windscribe.env
-  #   environment:
-  #     - WINDSCRIBE_LOCATION=NL
-  #     - WINDSCRIBE_FIREWALL=on
-  #     - WINDSCRIBE_LANBYPASS=on
-  #   cap_add:
-  #     - NET_ADMIN
-  #   # network_mode: "host"
-  #   ports:
-  #     - 8112:8112 # Deluge (WebUI)
-  #     - 6881:6881 # Deluge
-  #     - 6881:6881/udp # Deluge
-  #   expose:
-  #     - 3128
-  #   dns:
-  #     - 1.1.1.1
-
-  # deluge:
-  #   # Ports are exposed by windscribe-proxy.
-  #   image: lscr.io/linuxserver/deluge:latest
-  #   container_name: deluge
-  #   environment:
-  #     - PUID=1000
-  #     - PGID=1000
-  #     - TZ=Europe/London
-  #     - DELUGE_LOGLEVEL=error
-  #   volumes:
-  #     - /srv/docker/deluge:/config
-  #     - /data/downloads:/downloads
-  #   restart: unless-stopped
-  #   depends_on:
-  #     - windscribe-proxy
-  #   network_mode: "service:windscribe-proxy"
-
   deluge:
     image: kabe0/deluge-windscribe:latest
     container_name: deluge
@@ -62,7 +24,7 @@ services:
       - /srv/docker/deluge:/config
       - /data/downloads:/downloads
     ports:
-      - 8112:8112 # Deluge (WebUI)
+      - 8112:8112
       - 58846:58846
     dns:
       - 8.8.8.8
@@ -127,6 +89,7 @@ services:
   proxy-manager:
     image: 'jc21/nginx-proxy-manager:latest'
     container_name: proxy-manager
+    env_file: proxy-manager.env
     ports:
       - '80:80'
       - '81:81'
@@ -145,6 +108,7 @@ services:
   proxy-manager-db:
     image: 'jc21/mariadb-aria:latest'
     container_name: proxy-manager-db
+    env_file: proxy-manager.env
     environment:
       MYSQL_ROOT_PASSWORD: "${PROXYMANAGER_PASSWORD}"
       MYSQL_DATABASE: 'npm'

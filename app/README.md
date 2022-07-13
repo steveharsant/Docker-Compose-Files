@@ -25,4 +25,4 @@ This Docker compose file is intended for an application/media server. Applicatio
 
 ## Preflight Configuration
 
-Update the `.env` file with the required environment variables before running `docker-compose up`
+Duplicate each template file removing the `.tmpl` extension. Edit the duplicated files with the required environment variables before executing `docker-compose up`
