@@ -1,19 +1,5 @@
 version: '3'
 services:
-  bazarr:
-    image: lscr.io/linuxserver/bazarr:latest
-    container_name: bazarr
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/London
-    volumes:
-      - /srv/docker/bazarr:/config
-      - /data/media/movies:/movies
-      - /data/media/tv:/tv
-    ports:
-      - 6767:6767
-    restart: unless-stopped
 
   deluge:
     image: kabe0/deluge-windscribe:latest
@@ -163,19 +149,6 @@ services:
       - 22000:22000/tcp
       - 22000:22000/udp
       - 21027:21027/udp
-    restart: unless-stopped
-
-  tailscale:
-    # After brining this container up, use the following command to set userspace & login:
-    # docker container exec -it tailscale tailscaled --tun=userspace-networking \
-    #  --socks5-server=localhost:1055 & tailscale up
-    image: tailscale/tailscale:stable
-    container_name: tailscale
-    volumes:
-      - /var/lib:/var/lib
-      - /dev/net/tun:/dev/net/tun
-    network_mode: 'host'
-    privileged: true
     restart: unless-stopped
 
   watchtower:
