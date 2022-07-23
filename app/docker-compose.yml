@@ -1,4 +1,4 @@
-version: '3'
+version: '3.4'
 services:
 
   deluge:
@@ -170,6 +170,32 @@ services:
       - 22000:22000/udp
       - 21027:21027/udp
     restart: unless-stopped
+
+  tdarr:
+    container_name: tdarr
+    image: ghcr.io/haveagitgat/tdarr:latest
+    restart: unless-stopped
+    ports:
+      - 8265:8265 # webUI port
+      - 8266:8266 # server port
+      - 8267:8267 # Internal node port
+      - 8268:8268 # Example extra node port
+    environment:
+      - TZ=Europe/London
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - UMASK_SET=002
+      - serverIP=0.0.0.0
+      - serverPort=8266
+      - webUIPort=8265
+      - internalNode=true
+      - nodeID=InternalNode
+    volumes:
+      - /srv/docker/tdarr/server:/app/server
+      - /srv/docker/tdarr/config:/app/configs
+      - /srv/docker/tdarr/logs:/app/logs
+      - /data/media:/media
+      - /data/.tdarr_cache:/temp
 
   watchtower:
     image: containrrr/watchtower

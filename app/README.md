@@ -12,16 +12,18 @@ This Docker compose file is intended for an application/media server. Applicatio
 * Scrutiny
 * Sonarr
 * Syncthing
+* tdarr (set to internal node)
 * Watchtower
 
 ## Paths
 
 * Docker container config paths are exposed at: `/srv/docker/<<container-name>>`
-* The `/data` directory is the root for all user data. Required directory hireachy is:
-  * `/data/downloads'
+* The `/data` directory is the root for all user data. Media is expected to be found at:
   * `/data/media'
     * `/data/media/movies'
     * `/data/media/tv'
+
+> **Note:** *Other directories like `/data/downloads` that are not expected to have data in them when creating the containers will be created as needed.*
 
 ## Preflight Configuration
 
