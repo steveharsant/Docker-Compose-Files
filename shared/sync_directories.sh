@@ -10,8 +10,10 @@ root_path=${1%/}
 backup_path=${2%/}
 log_path=${3%/}
 
+
 if [ $# -eq 3 ]; then
-  log_file="$log_path/$(date -u +'%y-%m-%d_%H-%M').log"
+  # root_path variable is parsed to replace / with _ characters
+  log_file="$log_path/${root_path//\//_}-$(date -u +'%y-%m-%d_%H-%M').log"
   echo "Logging to fie: $log_file"
 fi
 
