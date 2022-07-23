@@ -182,8 +182,8 @@ services:
       - 8268:8268 # Example extra node port
     environment:
       - TZ=Europe/London
-      - PUID=${PUID}
-      - PGID=${PGID}
+      - PUID=1000
+      - PGID=1000
       - UMASK_SET=002
       - serverIP=0.0.0.0
       - serverPort=8266
