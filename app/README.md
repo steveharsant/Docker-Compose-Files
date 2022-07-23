@@ -2,17 +2,17 @@
 
 This Docker compose file is intended for an application/media server. Applications include:
 
-* Bazarr
 * Deluge
 * Emby
+* Flaresolverr
 * Jakett
 * Ombi
-* Nginx Proxy Manager
+* Nginx Proxy Manager (and dB)
 * Radarr
+* Scrutiny
 * Sonarr
 * Syncthing
 * Watchtower
-* Windscribe Proxy
 
 ## Paths
 
@@ -25,4 +25,6 @@ This Docker compose file is intended for an application/media server. Applicatio
 
 ## Preflight Configuration
 
-Duplicate each template file removing the `.tmpl` extension. Edit the duplicated files with the required environment variables before executing `docker-compose up`
+* Duplicate each template file removing the `.tmpl` extension. Edit the duplicated files with the required environment variables before executing `docker-compose up -d`
+
+* Edit the devices for the Scrutiny container to set the disk paths for your host.
