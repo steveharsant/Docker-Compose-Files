@@ -12,8 +12,7 @@ This Docker compose file is intended for an application/media server. Applicatio
 * Scrutiny
 * Sonarr
 * Syncthing
-* Tdarr
-* Tdarr Node
+* Tdarr (with internal node)
 * Watchtower
 
 ## Paths
