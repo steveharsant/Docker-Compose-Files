@@ -14,6 +14,7 @@ This Docker compose file is intended for an application/media server. Applicatio
 * Syncthing
 * Tdarr (with internal node)
 * Watchtower
+* YouTube-DL Material (and dB)
 
 ## Paths
 

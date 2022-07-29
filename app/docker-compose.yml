@@ -90,6 +90,7 @@ services:
     volumes:
       - /srv/docker/nginx_proxy_manager/data:/data
       - /srv/docker/nginx_proxy_manager/letsencrypt:/etc/letsencrypt
+    restart: unless-stopped
 
   proxy-manager-db:
     image: 'jc21/mariadb-aria:latest'
@@ -102,6 +103,7 @@ services:
       MYSQL_PASSWORD: "${PROXYMANAGER_PASSWORD}"
     volumes:
       - /srv/docker/nginx_proxy_manager/mysql:/var/lib/mysql
+    restart: unless-stopped
 
   radarr:
     image: ghcr.io/linuxserver/radarr
@@ -137,6 +139,7 @@ services:
       - '/dev/sdd'
       - '/dev/sde'
       - '/dev/sdf'
+    restart: unless-stopped
 
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
@@ -209,3 +212,35 @@ services:
       - WATCHTOWER_TIMEOUT=1800s
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+
+  ytdl:
+    image: tzahi12345/youtubedl-material:latest
+    container_name: ytdl
+    depends_on:
+      - ytdl-db
+    environment:
+      - ALLOW_CONFIG_MUTATIONS='true'
+      - ytdl_mongodb_connection_string='mongodb://ytdl-db:27017'
+      - ytdl_use_local_db='false'
+      - write_ytdl_config='true'
+    volumes:
+      - /srv/docker/ytdl/appdata:/app/appdata
+      - /data/downloads/.ytdl/audio:/app/audio
+      - /data/downloads/.ytdl/video:/app/video
+      - /srv/docker/ytdl/subscriptions:/app/subscriptions
+      - /srv/docker/ytdl/users:/app/users
+    ports:
+      - "8998:17442"
+    restart: unless-stopped
+
+  ytdl-db:
+    image: mongo
+    container_name: ytdl-db
+    logging:
+      driver: "none"
+    volumes:
+      - /srv/docker/ytdl/db/:/data/db
+    ports:
+      - "27017:27017"
+    restart: unless-stopped
