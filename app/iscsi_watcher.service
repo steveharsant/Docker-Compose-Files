@@ -1,0 +1,15 @@
+[Unit]
+Description=iSCSI watcher service to keep iSCSI targets alive
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+ExecStart=/usr/bin/bash /srv/Local-Infrastructure/app/iscsi_watcher.sh
+Type=simple
+User=root
+Group=root
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
