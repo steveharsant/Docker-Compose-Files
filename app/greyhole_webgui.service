@@ -1,0 +1,15 @@
+[Unit]
+Description=Greyhole WebUI
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+ExecStart=php -S 0.0.0.0:8012 /usr/share/greyhole/web-app/index.php
+Type=simple
+User=root
+Group=root
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
