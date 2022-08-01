@@ -3,7 +3,7 @@
 # This script takes in 1 argument, the path to the directory to watch and ensures that the directory is available.
 # If the directory is not available (based on timeout of the ls command on that directory), the script will restart
 # the iSCSI daemon. This is to ensure that the directory is available at all times.
-export ISCSI_WATCHER_DEBUG=true
+
 debug(){
   if [ "${ISCSI_WATCHER_DEBUG,,}" == "true" ]; then
     echo "$1"
@@ -58,25 +58,5 @@ while true; do
       then debug 'Successfully restarted iSCSI daemon. Resetting threshould counter'; i=1
       else debug 'Failed to restart iSCSI daemon'
     fi
-
   fi
-
 done
-
-
-
-
-
-
-
-# done
-
-exit
-
-
-
-
-
-
-# while true; do
-# done

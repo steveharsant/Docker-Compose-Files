@@ -41,3 +41,5 @@ A small utility that takes one (positional) parameter of the directory where an 
 A companion service file exists to run this script as a service. It is set to run as `root`. This is not recommended generally and should be changed to a user with only the scope to restart services. The path of the script it starts will likely need to be changed as well to point to the cloned location.
 
 If sleep times or retry thresholds need to be changed, that can be done at the top of the script. (Not parameters as this likely  won't need changing.)
+
+To enable debugging, set the environment variable `ISCSI_WATCHER_DEBUG` to `true`
