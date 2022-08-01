@@ -53,10 +53,10 @@ while true; do
       else debug 'Failed to kill test suprocess'
     fi
 
-    debug "Attempting to restart iSCSI daemon"
+    echo 'iSCSI target location appears to be unreachable. Attempting to restart iSCSI daemon'
     if systemctl restart iscsid
       then debug 'Successfully restarted iSCSI daemon. Resetting threshould counter'; i=1
-      else debug 'Failed to restart iSCSI daemon'
+      else echo 'Failed to restart iSCSI daemon'
     fi
   fi
 done
