@@ -25,7 +25,7 @@ while true; do
   if ps -o pid= -p "$pid"; then
     debug 'pid exists'
 
-    (('i++'))
+    ((i++))
     debug "Thread counter incremented to: $i"
 
     debug "Sleeping for $retest_sleep seconds"
