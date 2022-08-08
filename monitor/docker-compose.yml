@@ -1,0 +1,43 @@
+version: '3.4'
+services:
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - 3000:3000
+    volumes:
+      - /srv/docker/grafana/config:/var/lib/grafana
+    restart: unless-stopped
+
+  grafana-db:
+    image: influxdb:latest
+    container_name: grafana-db
+    ports:
+      - 8086:8086
+    volumes:
+      - /srv/docker/grafana/db:/var/lib/influxdb
+    restart: unless-stopped
+
+  uptime-kuma:
+    image: louislam/uptime-kuma:latest
+    container_name: uptime-kuma
+    volumes:
+      - /srv/docker/uptime_kuma:/app/data
+    ports:
+      - '3001:3001'
+    restart: unless-stopped
+
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+    environment:
+      - WATCHTOWER_CLEANUP=true
+      - WATCHTOWER_INCLUDE_RESTARTING=true
+      - WATCHTOWER_INCLUDE_STOPPED=true
+      - WATCHTOWER_REVIVE_STOPPED=true
+      - WATCHTOWER_SCHEDULE=0 0 19 * * SUN
+      - WATCHTOWER_TIMEOUT=1800s
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped

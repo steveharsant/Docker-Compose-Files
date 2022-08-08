@@ -6,7 +6,7 @@ read -r -p 'Enter a GitHub access token : ' -s gh_token
 
 apt-get update
 apt upgrade -y -o Dpkg::Options::=--force-confdef
-apt-get install ca-certificates curl git gnupg lsb-release jq unattended-upgrades
+apt-get install ca-certificates curl git gnupg lsb-release jq unattended-upgrades screen -y
 
 # Authenticate to Github
 cat <<EOL >> ~/.netrc
