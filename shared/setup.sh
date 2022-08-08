@@ -38,7 +38,7 @@ echo \
 
 # Update and install packages
 apt-get update
-apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin tailscale -y
+apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin ufw tailscale -y
 
 # Install Docker Compose
 tag=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | jq -r '.tag_name')
@@ -48,6 +48,7 @@ chmod +x /usr/local/bin/docker-compose
 # Configure sshd & restart service
 echo "
 Include /etc/ssh/sshd_config.d/*.conf
+Port 22 # !Remove after testing!
 Port 11989
 SyslogFacility AUTH
 LogLevel INFO
@@ -69,4 +70,9 @@ AcceptEnv LANG LC_*
 Subsystem sftp /usr/lib/openssh/sftp-server
 " > /etc/ssh/sshd_config
 
+ufw enable
+ufw allow 11989 comment 'Custom SSH'
+
 systemctl restart sshd
+
+echo '### Important! Remove port 22 from SSHD config after confirming 11989 works! ###'
