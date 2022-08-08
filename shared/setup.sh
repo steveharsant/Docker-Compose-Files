@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-read -r -p 'Enter your GitHub username  : ' gh_username -p 'Enter your GitHub email     : ' gh_email
+read -r -p 'Enter your GitHub email  : ' gh_email
 read -r -p 'Enter your GitHub username  : ' gh_username
 read -r -p 'Enter a GitHub access token : ' -s gh_token
 
