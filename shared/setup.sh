@@ -6,7 +6,7 @@ read -r -p 'Enter a GitHub access token : ' -s gh_token
 
 apt-get update
 apt upgrade -y -o Dpkg::Options::=--force-confdef
-apt-get install ca-certificates curl git gnupg lsb-release jq unattended-upgrades screen -y
+apt-get install ca-certificates curl git gnupg lsb-release vim jq unattended-upgrades screen -y
 
 # Authenticate to Github
 cat <<EOL >> ~/.netrc
@@ -76,3 +76,4 @@ ufw allow 11989 comment 'Custom SSH'
 systemctl restart sshd
 
 echo '### Important! Remove port 22 from SSHD config after confirming 11989 works! ###'
+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
