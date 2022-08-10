@@ -10,7 +10,6 @@ root_path=${1%/}
 backup_path=${2%/}
 log_path=${3%/}
 
-
 if [ $# -eq 3 ]; then
   # root_path variable is parsed to replace / with _ characters
   log_file="$log_path/${root_path//\//_}-$(date -u +'%y-%m-%d_%H-%M').log"
@@ -22,6 +21,13 @@ log(){
   if [ -n "$log_file" ]; then echo "$*" >> "$log_file"; fi
 }
 
+log 'Sourcing /etc/environment'
+source /etc/environment
+
+if [ -z "$UPTIME_WEBHOOK" ]; then
+  log 'Environment variable UPTIME_WEBHOOK is not set. Make sure you have set it in /etc/environment'
+fi
+
 # Create log directory if path is specified
 if [ -n "$log_path" ]; then if [ -d "$log_path" ]; then
   log "Log directory $log_path already exists. Removing logs older than 90 days"
@@ -29,6 +35,9 @@ if [ -n "$log_path" ]; then if [ -d "$log_path" ]; then
 else
   mkdir -p "$log_path"; log "Log directory $log_path created"
 fi; fi
+
+log 'Cleaning up log files older than 7 days'
+find "$log_path" -name "*.log" -type f -mtime +7 -delete
 
 log 'Discovering directories to exclude from backup'
 
@@ -48,4 +57,6 @@ for path in "${directories[@]}"; do
 done
 
 log "Executing backup with command: rsync -av $exclude_list --delete \"$root_path/\" \"$backup_path/\""
-rsync -av $exclude_list --delete "$root_path/" "$backup_path/" 2>&1 | tee -a "$log_file" 2> /dev/null
+if rsync -av $exclude_list --delete "$root_path/" "$backup_path/" 2>&1 | tee -a "$log_file" 2> /dev/null; then
+  curl "$UPTIME_WEBHOOK" 2> /dev/null
+fi
