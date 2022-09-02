@@ -7,6 +7,7 @@ This Docker compose file is intended for an application/media server. Applicatio
 * Flaresolverr
 * Jakett
 * Ombi
+* Netdata
 * Nginx Proxy Manager (and dB)
 * Radarr
 * Scrutiny

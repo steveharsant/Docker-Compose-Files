@@ -59,6 +59,32 @@ services:
       - 9117:9117
     restart: unless-stopped
 
+  netdata:
+    image: netdata/netdata
+    container_name: netdata
+    hostname: steve-app.sharsant.com # FQDN required
+    env_file: netdata.env
+    ports:
+      - 19999:19999
+    restart: unless-stopped
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - apparmor:unconfined
+    volumes:
+      - /srv/docker/netdata/config:/etc/netdata
+      - /srv/docker/netdata/lib:/var/lib/netdata
+      - /srv/docker/netdata/cache:/var/cache/netdata
+      - /etc/passwd:/host/etc/passwd:ro
+      - /etc/group:/host/etc/group:ro
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /etc/os-release:/host/etc/os-release:ro
+    environment:
+      - NETDATA_CLAIM_TOKEN=${NETDATA_CLAIM_TOKEN}
+      - NETDATA_CLAIM_URL=https://app.netdata.cloud
+      # - NETDATA_CLAIM_ROOMS=
+
   ombi:
     image: lscr.io/linuxserver/ombi:latest
     container_name: ombi
