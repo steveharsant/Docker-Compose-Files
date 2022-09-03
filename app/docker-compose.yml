@@ -5,7 +5,6 @@ services:
     image: kabe0/deluge-windscribe:latest
     container_name: deluge
     restart: unless-stopped
-    env_file: deluge.env
     volumes:
       - /srv/docker/deluge:/config
       - /data/downloads:/downloads
@@ -62,8 +61,7 @@ services:
   netdata:
     image: netdata/netdata
     container_name: netdata
-    hostname: steve-app.sharsant.com # FQDN required
-    env_file: netdata.env
+    hostname: steve-app
     ports:
       - 19999:19999
     restart: unless-stopped
@@ -72,9 +70,9 @@ services:
     security_opt:
       - apparmor:unconfined
     volumes:
-      - /srv/docker/netdata/config:/etc/netdata
-      - /srv/docker/netdata/lib:/var/lib/netdata
-      - /srv/docker/netdata/cache:/var/cache/netdata
+      - netdataconfig:/etc/netdata
+      - netdatalib:/var/lib/netdata
+      - netdatacache:/var/cache/netdata
       - /etc/passwd:/host/etc/passwd:ro
       - /etc/group:/host/etc/group:ro
       - /proc:/host/proc:ro
@@ -83,7 +81,12 @@ services:
     environment:
       - NETDATA_CLAIM_TOKEN=${NETDATA_CLAIM_TOKEN}
       - NETDATA_CLAIM_URL=https://app.netdata.cloud
-      # - NETDATA_CLAIM_ROOMS=
+      - NETDATA_CLAIM_ROOMS=
+
+volumes:
+  netdataconfig:
+  netdatalib:
+  netdatacache:
 
   ombi:
     image: lscr.io/linuxserver/ombi:latest
@@ -101,7 +104,6 @@ services:
   proxy-manager:
     image: 'jc21/nginx-proxy-manager:latest'
     container_name: proxy-manager
-    env_file: proxy-manager.env
     ports:
       - '80:80'
       - '81:81'
@@ -121,7 +123,6 @@ services:
   proxy-manager-db:
     image: 'jc21/mariadb-aria:latest'
     container_name: proxy-manager-db
-    env_file: proxy-manager.env
     environment:
       MYSQL_ROOT_PASSWORD: "${PROXYMANAGER_PASSWORD}"
       MYSQL_DATABASE: 'npm'
@@ -161,10 +162,11 @@ services:
     devices:
       - '/dev/sda'
       - '/dev/sdb'
-      - '/dev/sdc'
+      # - '/dev/sdc'
       - '/dev/sdd'
       - '/dev/sde'
       - '/dev/sdf'
+      - '/dev/sdg'
     restart: unless-stopped
 
   sonarr:

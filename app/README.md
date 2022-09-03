@@ -29,9 +29,9 @@ This Docker compose file is intended for an application/media server. Applicatio
 
 ## Preflight Configuration
 
-* Duplicate each template file removing the `.tmpl` extension. Edit the duplicated files with the required environment variables before executing `docker-compose up -d`
+* Duplicate the `.env.tmpl` file removing the `.tmpl` extension. Edit the duplicated files with the required environment variables before executing `docker-compose up -d`
 
-* Edit the devices for the Scrutiny container to set the disk paths for your host.
+* Edit the devices for the Scrutiny container to set the disk paths for your host. (***Note:** Device names can change after a reboot*)
 
 ## Helper Scripts
 
