@@ -1,10 +1,34 @@
 version: '3.4'
 services:
 
+  netdata:
+    image: netdata/netdata
+    container_name: netdata
+    hostname: steve-app
+    ports:
+      - 19999:19999
+    restart: unless-stopped
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - apparmor:unconfined
+    volumes:
+      - netdataconfig:/etc/netdata
+      - netdatalib:/var/lib/netdata
+      - netdatacache:/var/cache/netdata
+      - /etc/passwd:/host/etc/passwd:ro
+      - /etc/group:/host/etc/group:ro
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /etc/os-release:/host/etc/os-release:ro
+    environment:
+      - NETDATA_CLAIM_TOKEN=${NETDATA_CLAIM_TOKEN}
+      - NETDATA_CLAIM_URL=https://app.netdata.cloud
+      - NETDATA_CLAIM_ROOMS=
+
   proxy-manager:
     image: 'jc21/nginx-proxy-manager:latest'
     container_name: proxy-manager
-    env_file: proxy-manager.env
     ports:
       - '80:80'
       - '81:81'
@@ -24,7 +48,6 @@ services:
   proxy-manager-db:
     image: 'jc21/mariadb-aria:latest'
     container_name: proxy-manager-db
-    env_file: proxy-manager.env
     environment:
       MYSQL_ROOT_PASSWORD: "${PROXYMANAGER_PASSWORD}"
       MYSQL_DATABASE: 'npm'
@@ -47,3 +70,8 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     restart: unless-stopped
+
+volumes:
+  netdataconfig:
+  netdatalib:
+  netdatacache:

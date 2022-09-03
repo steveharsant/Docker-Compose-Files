@@ -4,9 +4,10 @@ This server is intended to run an nginx reverse proxy to proxy requests through 
 
 ## Containers
 
+* Netdata
 * Nginx Proxy Manager (and dB)
 * Watch Tower
 
 ## Preflight Configuration
 
-* Duplicate the template file for the Nginx Proxy Manager whilst removing the `.tmpl` extension, and set a password.
+* Duplicate the `.env.tmpl` file removing the `.tmpl` extension. Edit the duplicated files with the required environment variables before executing `docker-compose up -d`
