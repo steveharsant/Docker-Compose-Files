@@ -22,7 +22,7 @@ services:
   netdata:
     image: netdata/netdata
     container_name: netdata
-    hostname: steve-app
+    hostname: steve-monitor
     ports:
       - 19999:19999
     restart: unless-stopped
