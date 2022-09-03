@@ -83,11 +83,6 @@ services:
       - NETDATA_CLAIM_URL=https://app.netdata.cloud
       - NETDATA_CLAIM_ROOMS=
 
-volumes:
-  netdataconfig:
-  netdatalib:
-  netdatacache:
-
   ombi:
     image: lscr.io/linuxserver/ombi:latest
     container_name: ombi
@@ -272,3 +267,9 @@ volumes:
     ports:
       - "27017:27017"
     restart: unless-stopped
+
+# Netdata volumes. Must be last.
+volumes:
+  netdataconfig:
+  netdatalib:
+  netdatacache:
