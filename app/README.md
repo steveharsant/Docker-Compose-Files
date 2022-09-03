@@ -44,3 +44,7 @@ A companion service file exists to run this script as a service. It is set to ru
 If sleep times or retry thresholds need to be changed, that can be done at the top of the script. (Not parameters as this likely  won't need changing.)
 
 To enable debugging, set the environment variable `ISCSI_WATCHER_DEBUG` to `true`
+
+## Roadmap
+
+* Split out common services such as WatchTower and Netdata to a `common.yml` file to be used across different hosts.
