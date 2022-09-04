@@ -209,7 +209,7 @@ services:
       - 8265:8265 # webUI port
       - 8266:8266 # server port
       - 8267:8267 # Internal node port
-      - 8268:8268 # Example extra node port
+      - 8268:8268 # Extra node port
     environment:
       - TZ=Europe/London
       - PUID=1000
@@ -225,7 +225,7 @@ services:
       - /srv/docker/tdarr/config:/app/configs
       - /srv/docker/tdarr/logs:/app/logs
       - /data/media:/media
-      - /data/.tdarr_cache:/temp
+      - /data/media/.tdarr_cache:/temp
 
   watchtower:
     image: containrrr/watchtower
