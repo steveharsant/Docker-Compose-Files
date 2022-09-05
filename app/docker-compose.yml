@@ -224,8 +224,10 @@ services:
       - /srv/docker/tdarr/server:/app/server
       - /srv/docker/tdarr/config:/app/configs
       - /srv/docker/tdarr/logs:/app/logs
-      - /data/media:/media
-      - /data/media/movies/.tdarr_cache:/temp
+      - /mnt/lun1:/lun1
+      - /mnt/lun2:/lun2
+      # - /data/media:/media
+      # - /data/media/movies/.tdarr_cache:/temp
 
   watchtower:
     image: containrrr/watchtower
