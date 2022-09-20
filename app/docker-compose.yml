@@ -226,6 +226,7 @@ services:
       - /srv/docker/tdarr/logs:/app/logs
       - /mnt/lun1:/lun1
       - /mnt/lun2:/lun2
+      - /mnt/hdd1:/hdd1
       # - /data/media:/media
       # - /data/media/movies/.tdarr_cache:/temp
 
