@@ -16,6 +16,9 @@ services:
       - /srv/docker/emby:/config
     ports:
       - 8096:8096
+    cap_add:
+      - SYS_ADMIN
+      - DAC_READ_SEARCH
     restart: unless-stopped
 
   netdata:
