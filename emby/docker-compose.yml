@@ -16,8 +16,6 @@ services:
       - /srv/docker/emby:/config
     ports:
       - 8096:8096
-    devices:
-      - /dev/dri:/dev/dri
     restart: unless-stopped
 
   netdata:
