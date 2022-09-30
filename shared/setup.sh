@@ -76,4 +76,3 @@ ufw allow 11989 comment 'Custom SSH'
 systemctl restart sshd
 
 echo '### Important! Remove port 22 from SSHD config after confirming 11989 works! ###'
-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
