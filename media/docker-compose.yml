@@ -11,7 +11,7 @@ services:
       - VPN_LOCATION=${VPN_LOCATION}
     volumes:
       - /srv/docker/deluge:/config
-      - /downloads:/downloads
+      - /mnt/downloads:/downloads
     ports:
       - 8112:8112
       - 58846:58846
@@ -68,8 +68,8 @@ services:
       - TZ=Europe/London
     volumes:
       - /srv/docker/radarr:/config
-      - /media/movies:/movies
-      - /downloads:/downloads
+      - /mnt/media/movies:/movies
+      - /mnt/downloads:/downloads
     ports:
       - 7878:7878
     restart: unless-stopped
@@ -83,8 +83,8 @@ services:
       - TZ=Europe/London
     volumes:
       - /srv/docker/sonarr:/config
-      - /media/tv:/tv
-      - /downloads:/downloads
+      - /mnt/media/tv:/tv
+      - /mnt/downloads:/downloads
     ports:
       - 8989:8989
     restart: unless-stopped
@@ -115,8 +115,8 @@ services:
       - write_ytdl_config='true'
     volumes:
       - /srv/docker/ytdl/appdata:/app/appdata
-      - /downloads/.ytdl/audio:/app/audio
-      - /downloads/.ytdl/video:/app/video
+      - /mnt/downloads/.ytdl/audio:/app/audio
+      - /mnt/downloads/.ytdl/video:/app/video
       - /srv/docker/ytdl/subscriptions:/app/subscriptions
       - /srv/docker/ytdl/users:/app/users
     ports:
