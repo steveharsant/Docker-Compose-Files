@@ -1,14 +1,31 @@
 #!/usr/bin/env bash
 
 # shellcheck disable=SC2116
+# shellcheck disable=SC2129
 
-read -r -p 'Samba/Tdarr server IP : ' smb_share_ip
+# TODO: Add logic to permanently shutdown server after 30 days via cron
+
+read -r -p 'Samba server IP : ' smb_share_ip
 read -r -p 'Samba username : ' smb_username
-read -r -p 'Samba password : ' -s smb_password
+read -r -p 'Samba password : ' -s smb_password; echo ''
+read -r -p 'Tdarr server IP : ' tdarr_share_ip
+read -r -p 'Tailscale Auth key : ' -s tailscale_key; echo ''
 
 apt-get update
-apt-get upgrade -y
-apt-get install apt-transport-https cifs-utils curl handbrake handbrake-cli lsb-release vim unzip -y
+apt-get upgrade -y -o Dpkg::Options::=--force-confdef
+apt-get install apt-transport-https cifs-utils curl git handbrake handbrake-cli lsb-release vim unzip -y
+
+# Download & source dotfile
+git clone github.com/steveharsant/dotfiles.git
+
+cat <<EOF >> /root/.bashrc
+# Source personal customisations from github.com/steveharsant/dotfiles
+dotfiles_path='/srv/dotfiles'
+dotfiles=( $( ls \$dotfiles_path -a | grep bash ) )
+for dotfile in "\${dotfiles[@]}"; do
+  source "\$dotfiles_path/\$dotfile"
+done
+EOF
 
 # Install Tailscale
 distro=$(lsb_release -is); distro=${distro,,}
@@ -34,7 +51,8 @@ esac
 apt-get update -o Dir::Etc::sourcelist="sources.list.d/tailscale.list" \
   -o Dir::Etc::sourceparts="-" -o APT::Get::List-Cleanup="0"
 
-tailscale up
+apt-get install tailscale -y
+tailscale up --authkey "$tailscale_key"
 
 # Configure shares
 cat <<EOF > /root/.sambalogin
@@ -44,9 +62,11 @@ EOF
 
 mkdir /mnt/lun1
 mkdir /mnt/lun2
+mkdir /mnt/rd0
 
 echo "//$smb_share_ip/lun1 /mnt/lun1 cifs credentials=/root/.sambalogin,vers=3.0 0 0" >> /etc/fstab
 echo "//$smb_share_ip/lun2 /mnt/lun2 cifs credentials=/root/.sambalogin,vers=3.0 0 0" >> /etc/fstab
+echo "//$smb_share_ip/rd0  /mnt/rd0  cifs credentials=/root/.sambalogin,vers=3.0 0 0" >> /etc/fstab
 
 mount -a
 
@@ -74,7 +94,7 @@ unzip /opt/tdarr.zip -d /opt/
 cat <<EOF > /opt/configs/Tdarr_Node_Config.json
 {
   "nodeID": "$(hostname)",
-  "serverIP": "$smb_share_ip",
+  "serverIP": "$tdarr_share_ip",
   "serverPort": "8266",
   "handbrakePath": "",
   "ffmpegPath": "",
