@@ -9,7 +9,7 @@ services:
       - '81:81'
       - '443:443'
     environment:
-      - DISABLE_IPV6: 'true'
+      DISABLE_IPV6: 'true'
     volumes:
       - /srv/docker/nginx_proxy_manager/data:/data
       - /srv/docker/nginx_proxy_manager/letsencrypt:/etc/letsencrypt
