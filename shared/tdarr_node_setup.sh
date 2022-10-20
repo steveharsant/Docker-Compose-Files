@@ -5,23 +5,25 @@
 
 # TODO: Add logic to permanently shutdown server after 30 days via cron
 
-read -r -p 'Samba server IP : ' smb_share_ip
-read -r -p 'Samba username : ' smb_username
-read -r -p 'Samba password : ' -s smb_password; echo ''
-read -r -p 'Tdarr server IP : ' tdarr_share_ip
+read -r -p 'Samba server IP : ' smb_share_ip && \
+read -r -p 'Samba username : ' smb_username && \
+read -r -p 'Samba password : ' -s smb_password; echo '' && \
+read -r -p 'Tdarr server IP : ' tdarr_share_ip && \
 read -r -p 'Tailscale Auth key : ' -s tailscale_key; echo ''
 
 apt-get update
 apt-get upgrade -y -o Dpkg::Options::=--force-confdef
 apt-get install apt-transport-https cifs-utils curl git handbrake handbrake-cli lsb-release vim unzip -y
 
+pushd /srv/ || return
+
 # Download & source dotfile
-git clone github.com/steveharsant/dotfiles.git
+git clone https://github.com/steveharsant/dotfiles.git
 
 cat <<EOF >> /root/.bashrc
 # Source personal customisations from github.com/steveharsant/dotfiles
 dotfiles_path='/srv/dotfiles'
-dotfiles=( $( ls \$dotfiles_path -a | grep bash ) )
+dotfiles=( \$( ls \$dotfiles_path -a | grep bash ) )
 for dotfile in "\${dotfiles[@]}"; do
   source "\$dotfiles_path/\$dotfile"
 done
@@ -107,6 +109,10 @@ cat <<EOF > /opt/configs/Tdarr_Node_Config.json
     {
       "server": "/lun2",
       "node": "/mnt/lun2"
+    },
+    {
+      "server": "/hdd1",
+      "node": "/mnt/rd0"
     }
   ],
   "platform_arch": "$tdarr_platform_arch",
@@ -134,3 +140,4 @@ EOF
 
 systemctl enable tdarr_node.service
 systemctl start tdarr_node.service
+systemctl status tdarr_node.service
