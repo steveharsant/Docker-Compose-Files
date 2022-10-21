@@ -10,7 +10,7 @@ services:
       - VPN_PASSWORD=${VPN_PASSWORD}
       - VPN_LOCATION=${VPN_LOCATION}
     volumes:
-      - /srv/docker/deluge:/config
+      # - /srv/docker/deluge:/config
       - /mnt/downloads:/downloads
     ports:
       - 8112:8112
