@@ -63,11 +63,11 @@ test_service(){
 while getopts "c:f:m:p:s:t:" OPT; do
   case "$OPT" in
     c) containers="$OPTARG";;
-    f) failure_threshold="${OPTARG:-3}";;
-    m) mode="${OPTARG:-client}";;
+    f) failure_threshold="${OPTARG:=3}";;
+    m) mode="${OPTARG:=client}";;
     p) path="$OPTARG";;
     s) services="$OPTARG";;
-    t) sleep_time="${OPTARG:-10}";;
+    t) sleep_time="${OPTARG:=10}";;
     *) printf "Invalid argument passed -$OPT. Ignoring\n";;
   esac
 done
@@ -92,7 +92,7 @@ case "$mode" in
     while true; do
       if test_path; then
         debug 'Directory is mounted and accessible.'
-        if [ $n -gt $failure_threshold ]; then send_status_alert up; fi
+        if [ "$n" -gt "$failure_threshold" ]; then send_status_alert up; fi
         n=0
 
       else
