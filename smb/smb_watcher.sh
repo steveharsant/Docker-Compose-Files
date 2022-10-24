@@ -82,6 +82,7 @@ echo "services argument is: $services"
 echo "sleep_time argument is: $sleep_time"
 echo "Found $(grep 'cifs' /etc/fstab -c) smb/cifs mounts found in /etc/fstab"
 
+n=0
 
 # Start #
 case "$mode" in
