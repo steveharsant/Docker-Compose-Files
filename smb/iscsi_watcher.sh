@@ -32,7 +32,7 @@ while true; do
     sleep $retest_sleep
 
   else
-    debug 'pid does not exist. Resetting threshould counter'
+    debug 'pid does not exist. Assuming directory is reachable. Resetting threshould counter'
     i=1
 
     debug "Sleeping for $success_sleep seconds"
