@@ -93,7 +93,7 @@ case "$mode" in
     while true; do
       if test_path; then
         debug 'Directory is mounted and accessible.'
-        if [ "$n" -gt "$failure_threshold" ]; then send_status_alert up; fi
+        if [ "$n" -ge "$failure_threshold" ]; then send_status_alert up; fi
         n=0
 
       else
@@ -111,7 +111,7 @@ case "$mode" in
         fi
       fi
 
-      if [ $n -gt $failure_threshold ]; then send_status_alert down; fi
+      if [ $n -eq $failure_threshold ]; then send_status_alert down; fi
       debug "Sleeping for $sleep_time seconds"
       sleep $sleep_time
     done
@@ -126,7 +126,7 @@ case "$mode" in
 
       if test_path; then
         debug 'Directory is mounted and accessible.'
-        if [ $n -gt $failure_threshold ]; then send_status_alert up; fi
+        if [ $n -ge $failure_threshold ]; then send_status_alert up; fi
         n=0
 
       else
@@ -138,7 +138,7 @@ case "$mode" in
         fi
       fi
 
-      if [ $n -gt $failure_threshold ]; then send_status_alert down; fi
+      if [ $n -eq $failure_threshold ]; then send_status_alert down; fi
       debug "Sleeping for $sleep_time seconds"
       sleep $sleep_time
     done
