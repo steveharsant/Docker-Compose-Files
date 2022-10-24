@@ -31,7 +31,7 @@ debug(){
 send_status_alert(){
   case "$1" in
     down) title="❌ smb share is down for $HOSTNAME" ;;
-    up)   title="✔️ smb share is up for $HOSTNAME" ;;
+    up)   title="✅ smb share is up for $HOSTNAME" ;;
   esac
 
   if [[ -n $PUSHBULLET_API_KEY ]]; then
