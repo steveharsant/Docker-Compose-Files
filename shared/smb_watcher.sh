@@ -108,7 +108,7 @@ case "$mode" in
         if test_path; then
           debug 'Directory is back online. Restarting services and containers'
           if [[ -n "$services" ]]; then systemctl restart $services; fi
-          if [[ -n "$containers" ]]; then docker container restart $services; fi
+          if [[ -n "$containers" ]]; then docker container restart $containers; fi
           n=0
 
         else debug 'Failed to remount directory. Will attempt again after sleep'
