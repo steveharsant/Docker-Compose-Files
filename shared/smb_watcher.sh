@@ -37,7 +37,7 @@ send_status_alert(){
   if [[ -n $PUSHBULLET_API_KEY ]]; then
     curl --silent -u """$PUSHBULLET_API_KEY"":" \
       -d type="note" -d title="$title" \
-      -d body="$(date)\nDirectory: $path\nHost: $HOSTNAME\nMode: $mode"\
+      -d body="$(date) Directory: $path | Host: $HOSTNAME | Mode: $mode"\
        'https://api.pushbullet.com/v2/pushes' \
           > /dev/null 2>&1
   else
