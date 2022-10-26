@@ -54,7 +54,9 @@ test_path(){
 test_service(){
   if ! systemctl is-active --quiet $1; then
     debug "$1 is not active, attempting restart"
-    systemctl restart --quiet $1
+    if systemctl restart --quiet $1; then
+      send_status_alert up
+    fi
   fi
 }
 
@@ -131,8 +133,11 @@ case "$mode" in
         n=0
 
       else
-        systemctl restart smbd.service greyhole.service
+        # systemctl restart smbd.service greyhole.service
+        test_service smbd.service
+        test_service greyhole.service
         mount -a
+
         if ! test_path; then
           debug 'Failed to remount directory. Will attempt again after sleep';
           ((n++))
