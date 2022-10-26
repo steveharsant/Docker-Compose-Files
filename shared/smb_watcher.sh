@@ -38,7 +38,8 @@ send_status_alert(){
     curl --silent -u """$PUSHBULLET_API_KEY"":" \
       -d type="note" -d title="$title" \
       -d body="$(date)\nDirectory: $path\nHost: $HOSTNAME\nMode: $mode"\
-       'https://api.pushbullet.com/v2/pushes'
+       'https://api.pushbullet.com/v2/pushes' \
+          > /dev/null 2>&1
   else
     debug 'PUSHBULLET_API_KEY not set. Alert cannot be sent'
   fi
