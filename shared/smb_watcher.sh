@@ -81,6 +81,7 @@ echo "path argument is: $path"
 echo "services argument is: $services"
 echo "sleep_time argument is: $sleep_time"
 echo "Found $(grep 'cifs' /etc/fstab -c) smb/cifs mounts found in /etc/fstab"
+debug 'Debugging is on'
 
 n=0
 
