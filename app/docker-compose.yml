@@ -20,8 +20,8 @@ services:
     container_name: syncthing
     hostname: syncthing
     environment:
-      - PUID=1001
-      - PGID=1001
+      - PUID=0 # Setting this as 0 is a potential security risk but nessercary with greyhole smb. THIS IS NOT RECOMMENDED
+      - PGID=0 # Setting this as 0 is a potential security risk but nessercary with greyhole smb. THIS IS NOT RECOMMENDED
       - TZ=Europe/London
     volumes:
       - /srv/docker/syncthing:/config
