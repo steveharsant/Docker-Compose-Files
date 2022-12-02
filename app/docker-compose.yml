@@ -30,8 +30,8 @@ services:
       - MAPBOX_TOKEN=${MAPBOX_TOKEN}
     volumes:
       - photoview_api_cache:/app/cache
-      - /data/users/steve/pictures/:/photos/steve:ro
-      - /data/users/miki/photos/:/photos/miki:ro
+      - /users/steve/pictures/:/photos/steve:ro
+      - /users/miki/photos/:/photos/miki:ro
 
   proxy-manager:
     image: 'jc21/nginx-proxy-manager:latest'
@@ -57,7 +57,7 @@ services:
       - TZ=Europe/London
     volumes:
       - /srv/docker/syncthing:/config
-      - /data:/data
+      - /users:/data/users
     ports:
       - 8384:8384
       - 22000:22000/tcp
