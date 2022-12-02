@@ -1,21 +1,6 @@
 version: '3.4'
 services:
 
-  bazarr:
-    image: lscr.io/linuxserver/bazarr:latest
-    container_name: bazarr
-    environment:
-      - PUID=0
-      - PGID=0
-      - TZ=Europe/London
-    volumes:
-      - /srv/docker/bazarr/config:/config
-      - /mnt/media/movies:/movies
-      - /mnt/media/tv:/tv
-    ports:
-      - 6767:6767
-    restart: unless-stopped
-
   deluge:
     image: kabe0/deluge-windscribe:latest
     container_name: deluge
@@ -25,8 +10,7 @@ services:
       - VPN_PASSWORD=${VPN_PASSWORD}
       - VPN_LOCATION=${VPN_LOCATION}
     volumes:
-      # - /srv/docker/deluge:/config
-      - /mnt/downloads:/downloads
+      - /downloads:/downloads
     ports:
       - 8112:8112
       - 58846:58846
@@ -83,8 +67,8 @@ services:
       - TZ=Europe/London
     volumes:
       - /srv/docker/radarr:/config
-      - /mnt/media/movies:/movies
-      - /mnt/downloads:/downloads
+      - /media/movies:/movies
+      - /downloads:/downloads
     ports:
       - 7878:7878
     restart: unless-stopped
@@ -98,8 +82,8 @@ services:
       - TZ=Europe/London
     volumes:
       - /srv/docker/sonarr:/config
-      - /mnt/media/tv:/tv
-      - /mnt/downloads:/downloads
+      - /media/tv:/tv
+      - /downloads:/downloads
     ports:
       - 8989:8989
     restart: unless-stopped
@@ -157,10 +141,10 @@ services:
       - write_ytdl_config='true'
     volumes:
       - /srv/docker/ytdl/appdata:/app/appdata
-      - /mnt/downloads/.ytdl/audio:/app/audio
-      - /mnt/downloads/.ytdl/video:/app/video
       - /srv/docker/ytdl/subscriptions:/app/subscriptions
       - /srv/docker/ytdl/users:/app/users
+      - /downloads/.ytdl/audio:/app/audio
+      - /downloads/.ytdl/video:/app/video
     ports:
       - "8998:17442"
     restart: unless-stopped
