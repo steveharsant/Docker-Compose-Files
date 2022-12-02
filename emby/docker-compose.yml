@@ -13,6 +13,7 @@ services:
       - PGID=1000
       - TZ=Europe/London
     volumes:
+      - /media:/media
       - /srv/docker/emby:/config
       - /srv/docker/emby/custom-cont-init.d:/custom-cont-init.d:ro
     ports:
