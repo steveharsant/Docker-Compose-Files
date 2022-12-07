@@ -111,9 +111,7 @@ services:
       - /srv/docker/tdarr/server:/app/server
       - /srv/docker/tdarr/config:/app/configs
       - /srv/docker/tdarr/logs:/app/logs
-      - /mnt/lun1:/lun1
-      - /mnt/lun2:/lun2
-      - /mnt/rd0:/hdd1
+      - /media:/media
 
   watchtower:
     image: containrrr/watchtower
