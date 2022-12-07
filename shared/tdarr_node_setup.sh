@@ -62,13 +62,9 @@ username=$smb_username
 password=$smb_password
 EOF
 
-mkdir /mnt/lun1
-mkdir /mnt/lun2
-mkdir /mnt/rd0
+mkdir /media
 
-echo "//$smb_share_ip/lun1 /mnt/lun1 cifs credentials=/root/.sambalogin,vers=3.0 0 0" >> /etc/fstab
-echo "//$smb_share_ip/lun2 /mnt/lun2 cifs credentials=/root/.sambalogin,vers=3.0 0 0" >> /etc/fstab
-echo "//$smb_share_ip/rd0  /mnt/rd0  cifs credentials=/root/.sambalogin,vers=3.0 0 0" >> /etc/fstab
+echo "//$smb_share_ip/media /media cifs credentials=/root/.sambalogin,vers=3.0 0 0" >> /etc/fstab
 
 mount -a
 
@@ -103,16 +99,8 @@ cat <<EOF > /opt/configs/Tdarr_Node_Config.json
   "mkvpropeditPath": "",
   "pathTranslators": [
     {
-      "server": "/lun1",
-      "node": "/mnt/lun1"
-    },
-    {
-      "server": "/lun2",
-      "node": "/mnt/lun2"
-    },
-    {
-      "server": "/hdd1",
-      "node": "/mnt/rd0"
+      "server": "/media",
+      "node": "/media"
     }
   ],
   "platform_arch": "$tdarr_platform_arch",
