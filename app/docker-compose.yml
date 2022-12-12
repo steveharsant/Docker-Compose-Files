@@ -79,6 +79,19 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     restart: unless-stopped
 
+  wyl:
+    image: aceberg/watchyourlan:latest
+    container_name: wyl
+    hostname: wyl
+    environment:
+      - IFACE=eth0
+      - TZ=Europe/London
+      - THEME=darkly
+    volumes:
+      - /srv/docker/wyl:/data
+    network_mode: 'host'
+    restart: unless-stopped
+
 volumes:
   photoview_db_data:
   photoview_api_cache:
