@@ -87,6 +87,7 @@ services:
       - IFACE=eth0
       - TZ=Europe/London
       - THEME=darkly
+      - GUIPORT=8840
     volumes:
       - /srv/docker/wyl:/data
     network_mode: 'host'
