@@ -18,4 +18,4 @@ services:
     volumes:
       - /media:/media:z
       - /users:/users:z
-    command: '-s "media;/media;yes;no;no;${SMB_USER}" -s "users;/users;yes;no;no;${SMB_USER}" -u "${SMB_USER};${SMB_PASS}" -p'
+    command: '-s "media;/media;yes;no;no;${SMB_USER};${SMB_USER};${SMB_USER};media" -s "users;/users;yes;no;no;${SMB_USER};${SMB_USER};${SMB_USER};users" -u "${SMB_USER};${SMB_PASS}" -p'
