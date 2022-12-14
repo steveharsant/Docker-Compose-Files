@@ -16,6 +16,10 @@ services:
     stdin_open: true
     tty: true
     volumes:
+      - /downloads:/downloads:z
       - /media:/media:z
       - /users:/users:z
-    command: '-s "media;/media;yes;no;no;${SMB_USER};${SMB_USER};${SMB_USER};media" -s "users;/users;yes;no;no;${SMB_USER};${SMB_USER};${SMB_USER};users" -u "${SMB_USER};${SMB_PASS}" -p'
+    command: >-
+      '-s "downloads;/downloads;yes;no;no;${SMB_USER};${SMB_USER};${SMB_USER};downloads" '-s "media;/media;yes;no;no;${SMB_USER};${SMB_USER};${SMB_USER};media"
+       -s "users;/users;yes;no;no;${SMB_USER};${SMB_USER};${SMB_USER};users"
+       -u "${SMB_USER};${SMB_PASS}" -p'
