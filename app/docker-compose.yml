@@ -33,6 +33,14 @@ services:
     volumes:
       - /srv/docker/firefly/db:/var/lib/mysql
 
+  firefly_importer:
+    image: fireflyiii/data-importer:latest
+    restart: unless-stopped
+    ports:
+      - 8081:8080
+    depends_on:
+      - firefly
+
   photoview_db:
     image: mariadb:10.5
     container_name: photoview_db
