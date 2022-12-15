@@ -22,6 +22,7 @@ services:
 
   firefly_db:
     image: mariadb
+    container_name: firefly_db
     hostname: firefly_db
     restart: unless-stopped
     environment:
