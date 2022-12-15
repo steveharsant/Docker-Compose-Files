@@ -35,6 +35,7 @@ services:
 
   firefly_importer:
     image: fireflyiii/data-importer:latest
+    container_name: firefly_importer
     restart: unless-stopped
     ports:
       - 8081:8080
