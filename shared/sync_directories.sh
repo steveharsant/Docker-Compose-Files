@@ -5,6 +5,10 @@
 
 # This script is used to sync the files from an internal drive to an external drive.
 # A directory will be backed up only if the file '.nobackup' is not present.
+#
+# Example:
+# /srv/Local-Infrastructure/shared/sync_directories.sh /mnt/disks/rd0/users/ /mnt/disks/ext1/users /mnt/disks/ext1/logs
+# Note the trailing slash on the root_path
 
 root_path=${1%/}
 backup_path=${2%/}
