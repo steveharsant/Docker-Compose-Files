@@ -63,8 +63,8 @@ services:
     container_name: portainer_agent
     environment:
       - EDGE=1
-      - EDGE_ID=6514deb2-d94e-4640-a146-f6ceaf2367a1
-      - EDGE_KEY=aHR0cHM6Ly8xOTIuMTY4LjUuMTExOjk0NDN8MTkyLjE2OC41LjExMTo4MDAwfGZjOmM2OjhkOmM4OjUxOjdmOjcyOmM4OmQ4OjVkOjczOjgyOjhlOmFlOmMzOjlmfDQ
+      - EDGE_ID=${EDGE_ID}
+      - EDGE_KEY=${EDGE_KEY}
       - EDGE_INSECURE_POLL=1
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
