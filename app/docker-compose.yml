@@ -78,7 +78,7 @@ services:
     image: portainer/portainer-ce:latest
     container_name: portainer
     ports:
-      - '8000:8000'
+      - '8000:8001'
       - '9443:9443'
     volumes:
       - /srv/docker/portainer/data:/data
