@@ -79,7 +79,8 @@ services:
     container_name: portainer
     ports:
       - '8001:8000'
-      - '9443:9443'
+      # - '9443:9443' # https port. ssl via nginx
+      - '9000:9000'
     volumes:
       - /srv/docker/portainer/data:/data
       - /var/run/docker.sock:/var/run/docker.sock
