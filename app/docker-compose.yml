@@ -83,7 +83,6 @@ services:
       - '9000:9000'
     volumes:
       - /srv/docker/portainer/data:/data
-      - /var/run/docker.sock:/var/run/docker.sock
     restart: unless-stopped
 
   proxy-manager:
