@@ -70,7 +70,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - /var/lib/docker/volumes:/var/lib/docker/volumes
       - /:/host
-      - /srv/docker/portainer_agent:/data
+      - /srv/docker/portainer_agent/media:/data
     restart: unless-stopped
 
   radarr:
