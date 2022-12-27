@@ -59,7 +59,7 @@ services:
     container_name: photoview
     restart: unless-stopped
     ports:
-      - 8000:80
+      - 8001:80
     depends_on:
       - photoview_db
     environment:
@@ -78,7 +78,7 @@ services:
     image: portainer/portainer-ce:latest
     container_name: portainer
     ports:
-      - '8001:8000'
+      - '8000:8000'
       - '9443:9443'
       - '9000:9000'
     volumes:
