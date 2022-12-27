@@ -58,20 +58,20 @@ services:
       - 3579:3579
     restart: unless-stopped
 
-  portainer_agent:
-    image: portainer/agent:latest
-    container_name: portainer_agent
-    environment:
-      - EDGE=1
-      - EDGE_ID=${EDGE_ID}
-      - EDGE_KEY=${EDGE_KEY}
-      - EDGE_INSECURE_POLL=1
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /var/lib/docker/volumes:/var/lib/docker/volumes
-      - /:/host
-      - /srv/docker/portainer_agent/media:/data
-    restart: unless-stopped
+  # portainer_agent:
+  #   image: portainer/agent:latest
+  #   container_name: portainer_agent
+  #   environment:
+  #     - EDGE=1
+  #     - EDGE_ID=${EDGE_ID}
+  #     - EDGE_KEY=${EDGE_KEY}
+  #     - EDGE_INSECURE_POLL=1
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #     - /var/lib/docker/volumes:/var/lib/docker/volumes
+  #     - /:/host
+  #     - /srv/docker/portainer_agent/media:/data
+  #   restart: unless-stopped
 
   radarr:
     image: ghcr.io/linuxserver/radarr
@@ -128,19 +128,19 @@ services:
       - /srv/docker/tdarr/logs:/app/logs
       - /media:/media
 
-  watchtower:
-    image: containrrr/watchtower
-    container_name: watchtower
-    environment:
-      - WATCHTOWER_CLEANUP=true
-      - WATCHTOWER_INCLUDE_RESTARTING=true
-      - WATCHTOWER_INCLUDE_STOPPED=true
-      - WATCHTOWER_REVIVE_STOPPED=true
-      - WATCHTOWER_SCHEDULE=0 0 19 * * SUN
-      - WATCHTOWER_TIMEOUT=1800s
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    restart: unless-stopped
+  # watchtower:
+  #   image: containrrr/watchtower
+  #   container_name: watchtower
+  #   environment:
+  #     - WATCHTOWER_CLEANUP=true
+  #     - WATCHTOWER_INCLUDE_RESTARTING=true
+  #     - WATCHTOWER_INCLUDE_STOPPED=true
+  #     - WATCHTOWER_REVIVE_STOPPED=true
+  #     - WATCHTOWER_SCHEDULE=0 0 19 * * SUN
+  #     - WATCHTOWER_TIMEOUT=1800s
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #   restart: unless-stopped
 
   ytdl:
     image: tzahi12345/youtubedl-material:latest
