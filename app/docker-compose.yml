@@ -74,6 +74,18 @@ services:
       - /users/steve/pictures/:/photos/steve:ro
       - /users/miki/photos/:/photos/miki:ro
 
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    ports:
+      - '8000:8000'
+      - '9443:9443'
+    volumes:
+      - /srv/docker/portainer/data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    privileged: true
+    restart: unless-stopped
+
   proxy-manager:
     image: 'jc21/nginx-proxy-manager:latest'
     container_name: proxy-manager
