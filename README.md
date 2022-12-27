@@ -1,3 +1,3 @@
 # Local Infrastructure
 
-See each directories README for information on how to run.
+Docker compose files (and some helper scripts) for managing my homelab.
