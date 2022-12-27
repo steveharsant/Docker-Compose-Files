@@ -80,7 +80,7 @@ services:
     networks:
       - portainer
     ports:
-      - '8000:8001'
+      - '8001:8000'
       - '9443:9443'
     volumes:
       - /srv/docker/portainer/data:/data
