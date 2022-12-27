@@ -77,6 +77,8 @@ services:
   portainer:
     image: portainer/portainer-ce:latest
     container_name: portainer
+    networks:
+      - portainer
     ports:
       - '8000:8001'
       - '9443:9443'
@@ -146,3 +148,6 @@ services:
       - /srv/docker/wyl:/data
     network_mode: 'host'
     restart: unless-stopped
+
+networks:
+  portainer:
