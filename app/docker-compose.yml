@@ -50,10 +50,11 @@ services:
       - PGID=1000
       - TZ=Europe/London
     volumes:
-      - /srv/docker/nextcloud:/config
-      - /downloads:/data/downloads
-      - /media:/data/media
-      - /users:/data/users
+      - /srv/docker/nextcloud/config:/config
+      - /srv/docker/nextcloud/data:/data
+      - /downloads:/files/downloads
+      - /media:/files/media
+      - /users:/files/users
     ports:
       - 8443:443
     restart: unless-stopped
