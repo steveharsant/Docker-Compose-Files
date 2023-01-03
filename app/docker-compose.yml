@@ -42,6 +42,22 @@ services:
     depends_on:
       - firefly
 
+  nextcloud:
+    image: lscr.io/linuxserver/nextcloud:latest
+    container_name: nextcloud
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+    volumes:
+      - /srv/docker/nextcloud:/config
+      - /downloads:/data/downloads
+      - /media:/data/media
+      - /users:/data/users
+    ports:
+      - 8443:443
+    restart: unless-stopped
+
   photoview_db:
     image: mariadb:10.5
     container_name: photoview_db
