@@ -4,7 +4,7 @@ apt-get update
 apt-get -qy -o "Dpkg::Options::=--force-confdef" -o "Dpkg::Options::=--force-confold" upgrade
 
 # install
-apt-get install unattended-upgrades apt-listchanges
+apt-get install unattended-upgrades apt-listchanges -y
 
 # enable
 echo unattended-upgrades unattended-upgrades/enable_auto_updates boolean true | debconf-set-selections
