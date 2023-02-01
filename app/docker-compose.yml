@@ -9,7 +9,7 @@ services:
       - /srv/docker/magic_mirror/modules:/opt/magic_mirror/modules
       - /srv/docker/magic_mirror/css:/opt/magic_mirror/css
     ports:
-      - 8080:8080
+      - 9080:8080
     restart: unless-stopped
     command:
       - npm
