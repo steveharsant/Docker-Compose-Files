@@ -1,21 +1,6 @@
 version: '3.4'
 services:
 
-  magicmirror:
-    container_name: mm
-    image: karsten13/magicmirror:latest
-    volumes:
-      - /srv/docker/magic_mirror/config:/opt/magic_mirror/config
-      - /srv/docker/magic_mirror/modules:/opt/magic_mirror/modules
-      - /srv/docker/magic_mirror/css:/opt/magic_mirror/css
-    ports:
-      - 9080:8080
-    restart: unless-stopped
-    command:
-      - npm
-      - run
-      - server
-
   nextcloud:
     image: lscr.io/linuxserver/nextcloud:latest
     container_name: nextcloud
