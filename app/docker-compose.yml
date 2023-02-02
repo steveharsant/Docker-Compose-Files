@@ -75,6 +75,17 @@ services:
       - /srv/docker/nginx_proxy_manager/letsencrypt:/etc/letsencrypt
     restart: unless-stopped
 
+  smashing:
+    image: steveharsant/smashing:latest
+    container_name: smashing
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec smashing start -p 3030 -a '0.0.0.0'"
+    ports:
+      - 3030:3030
+    environment:
+      SMASHING_KEY: ${SMASHING_KEY}
+    volumes:
+      - /srv/docker/smashing:/smashing
+
   syncthing:
     image: lscr.io/linuxserver/syncthing:latest
     container_name: syncthing
